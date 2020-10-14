@@ -3,8 +3,9 @@ package lesson1;
 import java.util.Scanner;
 
 public class HomeWork1 {
+    // exercise 1
     public static void main(String[] args) {
-        // exercise 1
+        // exercise 2
         byte b = 1;
         short sh = 3567;
         int i = -305060707;
@@ -14,7 +15,7 @@ public class HomeWork1 {
         char c = '*';
         String s = "Hello World";
 
-        // exercises 2-5
+        // exercises 3-6
         System.out.println(calculate(1,2,3,4));
         System.out.println(within(10,10));
         System.out.println(isPositive(23456));

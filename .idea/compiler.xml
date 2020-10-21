@@ -11,5 +11,9 @@
         <module name="Java1" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Java2" target="14" />
+      <module name="Java3" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

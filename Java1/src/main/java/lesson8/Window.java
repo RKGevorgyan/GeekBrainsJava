@@ -190,18 +190,6 @@ public class Window extends JFrame {
                 } // end of columns
             }// end of rows
         }
-        // random move
-        while (flag) {
-            coordinateX = (int) (Math.random() * (map.length));
-            coordinateY = (int) (Math.random() * (map.length));
-            if (map[coordinateX][coordinateY].getIcon() == ICON_DEFAULT) {
-                map[coordinateX][coordinateY].setIcon(ICON_O);
-                map[coordinateX][coordinateY].setDisabledIcon(ICON_O);
-                map[coordinateX][coordinateY].setEnabled(false);
-                firstMove++;
-                flag = false;
-            }
-        }
         // draw strategy
         if(flag){
             int detectXI = 0;
@@ -218,6 +206,7 @@ public class Window extends JFrame {
                         map[coordinateX][i].setIcon(ICON_O);
                         map[coordinateX][i].setDisabledIcon(ICON_O);
                         map[coordinateX][i].setEnabled(false);
+                        flag = false;
                         break;
                     }
                 }
@@ -226,11 +215,25 @@ public class Window extends JFrame {
                         map[i][coordinateY].setIcon(ICON_O);
                         map[i][coordinateY].setDisabledIcon(ICON_O);
                         map[i][coordinateY].setEnabled(false);
+                        flag = false;
                         break;
                     }
                 }
             }
         }
+        // random move
+        while (flag) {
+            coordinateX = (int) (Math.random() * (map.length));
+            coordinateY = (int) (Math.random() * (map.length));
+            if (map[coordinateX][coordinateY].getIcon() == ICON_DEFAULT) {
+                map[coordinateX][coordinateY].setIcon(ICON_O);
+                map[coordinateX][coordinateY].setDisabledIcon(ICON_O);
+                map[coordinateX][coordinateY].setEnabled(false);
+                firstMove++;
+                flag = false;
+            }
+        }
+
     }
     public Window() throws HeadlessException {
         setSize(300, 300);

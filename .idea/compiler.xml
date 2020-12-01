@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Java2" />
         <module name="Java3" />
+        <module name="chat" />
         <module name="Java1" />
       </profile>
     </annotationProcessing>

@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class RegistrationController {
 
+
     public TextField login;
     public TextField password;
 

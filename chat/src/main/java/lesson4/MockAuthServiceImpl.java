@@ -6,10 +6,12 @@ public class MockAuthServiceImpl implements AuthService {
 
     private static MockAuthServiceImpl instance;
     private HashMap<String, String> userDao;
+    private static String currentUser;
 
     private MockAuthServiceImpl() {
         userDao = new HashMap<>();
         userDao.put("user", "pass");
+        currentUser = "user";
     }
 
     public static MockAuthServiceImpl getInstance() {
@@ -19,13 +21,23 @@ public class MockAuthServiceImpl implements AuthService {
         return instance;
     }
 
+    public static String getCurrentUser() {
+        return currentUser;
+    }
+
     @Override
     public void addUser(String name, String pass) {
         userDao.put(name, pass);
+        currentUser = name;
     }
 
     @Override
     public boolean auth(String name, String pass) {
-        return userDao.get(name) != null;
+        if (userDao.get(name) != null) {
+            currentUser = name;
+            return true;
+        }
+        return false;
     }
+
 }

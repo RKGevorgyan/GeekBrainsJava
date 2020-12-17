@@ -1,5 +1,6 @@
 package lesson4;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -19,8 +22,11 @@ public class ChatController implements Initializable {
     public TextArea output;
     public TextField input;
 
-    public void send(ActionEvent actionEvent) {
-        output.appendText(input.getText() + "\n");
+    private ObjectOutputStream os;
+    private Thread serverThread;
+
+    public void send(ActionEvent actionEvent) throws IOException {
+        os.writeObject(Message.of(MockAuthServiceImpl.getCurrentUser(), input.getText() + "\n"));
         input.clear();
     }
 
@@ -32,14 +38,21 @@ public class ChatController implements Initializable {
         stage.setResizable(false);
         stage.show();
         input.getScene().getWindow().hide();
-        FileHistoryService.getInstance().save(
-                Arrays.asList(output.getText().split("\n").clone()));
+        os.close();
+        serverThread.interrupt();
+        Platform.exit();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FileHistoryService.getInstance().load().forEach(historyLine -> {
-            output.appendText(historyLine + "\n");
-        });
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 8190);
+            os = new ObjectOutputStream(socket.getOutputStream());
+            serverThread = new Thread(new ServerListener(socket, output));
+            serverThread.start();
+        } catch (IOException e) {
+            System.out.println("WARNING: Can't establish connection");
+        }
     }
 }

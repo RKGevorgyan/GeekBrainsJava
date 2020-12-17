@@ -14,6 +14,7 @@ public class AuthController {
     public TextField login;
     public TextField password;
 
+
     public void enter(ActionEvent actionEvent) throws IOException {
         boolean auth = MockAuthServiceImpl.getInstance()
                 .auth(login.getText(), password.getText());

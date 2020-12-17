@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class FileHistoryService implements HistoryService {
 
+
     private static FileHistoryService instanse;
     private String path = "history.txt";
 

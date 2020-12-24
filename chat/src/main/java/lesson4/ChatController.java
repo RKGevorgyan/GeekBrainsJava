@@ -43,6 +43,15 @@ public class ChatController implements Initializable {
         Platform.exit();
     }
 
+    public void changeLogin(ActionEvent actionEvent) throws IOException {
+        Parent chat = FXMLLoader.load(getClass().getResource("changeLogin.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("Смена Логина");
+        stage.setScene(new Scene(chat));
+        stage.setResizable(false);
+        stage.show();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Socket socket = null;

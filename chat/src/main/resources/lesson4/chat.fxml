@@ -8,6 +8,7 @@
     <MenuBar stylesheets="@style.css" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#quit" text="Quit" />
+            <MenuItem fx:id="login" mnemonicParsing="false" onAction="#changeLogin" text="Change Login"/>
         </Menu>
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="607.0" prefWidth="377.0" stylesheets="@style.css" VBox.vgrow="ALWAYS">

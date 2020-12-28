@@ -27,7 +27,7 @@ public class EchoServer {
                 new Thread(handler).start();
                 System.out.println("Connected user: " + counter);
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Server was broken");
         }
     }

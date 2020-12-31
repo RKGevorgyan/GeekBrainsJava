@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EchoServer {
 
@@ -24,12 +26,17 @@ public class EchoServer {
                 counter++;
                 ClientHandler handler = new ClientHandler(socket, this);
                 clients.add(handler);
-                new Thread(handler).start();
+                ExecutorService executor = Executors.newCachedThreadPool();
+                Object mon = new Object();
+                executor.execute(handler);
+//                new Thread(handler).start();
                 System.out.println("Connected user: " + counter);
+                executor.shutdownNow();
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Server was broken");
         }
+
     }
 
     public boolean isRunning() {

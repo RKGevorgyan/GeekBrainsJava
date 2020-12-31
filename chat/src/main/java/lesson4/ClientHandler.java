@@ -14,7 +14,7 @@ public class ClientHandler implements Runnable, Closeable {
     private boolean running;
     private byte [] buffer;
 
-    public ClientHandler(Socket socket, EchoServer chatServer) throws IOException, ClassNotFoundException {
+    public ClientHandler(Socket socket, EchoServer chatServer) throws IOException {
         this.server = chatServer;
         this.socket = socket;
         this.os = new ObjectOutputStream(socket.getOutputStream());
@@ -37,9 +37,6 @@ public class ClientHandler implements Runnable, Closeable {
                 Message message = (Message) is.readObject();
                 System.out.println(message);
                 server.broadCast(message);
-                BufferedWriter bw = new BufferedWriter(new FileWriter("history.txt",true));
-                bw.write(message.getSendAt() + ": " + message.getAuthor() + ": " + message.getMessage()+"\n");
-                bw.close();
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Exception while read");
                 break;

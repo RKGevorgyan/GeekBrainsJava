@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
+    Logger log = Logger.getLogger(ChatController.class);
 
     public TextArea output;
     public TextField input;
@@ -60,7 +62,8 @@ public class ChatController implements Initializable {
             serverThread = new Thread(new ServerListener(socket, output));
             serverThread.start();
         } catch (IOException e) {
-            System.out.println("WARNING: Can't establish connection");
+            //System.out.println("WARNING: Can't establish connection");
+            log.error("WARNING: Can't establish connection");
         }
     }
 }

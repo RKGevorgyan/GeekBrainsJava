@@ -1,11 +1,17 @@
 package lesson4;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EchoServer {
+
+    Logger log = Logger.getLogger(EchoServer.class);
 
     private final int PORT = 8190;
     private boolean running;
@@ -16,20 +22,30 @@ public class EchoServer {
     public EchoServer(){
         running = true;
         try(ServerSocket serverSocket = new ServerSocket(PORT)){
-            System.out.println("Server started!");
+            //System.out.println("Server started!");
+            log.info("Server started");
             while (running){
-                System.out.println("Server is waiting connection");
+                //System.out.println("Server is waiting connection");
+                log.info("Server is waiting connection");
                 Socket socket = serverSocket.accept();
-                System.out.println("Client accepted!");
+                //System.out.println("Client accepted!");
+                log.info("Client accepted");
                 counter++;
                 ClientHandler handler = new ClientHandler(socket, this);
                 clients.add(handler);
-                new Thread(handler).start();
-                System.out.println("Connected user: " + counter);
+                ExecutorService executor = Executors.newCachedThreadPool();
+                Object mon = new Object();
+                executor.execute(handler);
+//                new Thread(handler).start();
+                //System.out.println("Connected user: " + counter);
+                log.info("Connected user: " + counter);
+                executor.shutdownNow();
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Server was broken");
+            //System.out.println("Server was broken");
+            log.error("Server was broken");
         }
+
     }
 
     public boolean isRunning() {

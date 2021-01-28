@@ -1,12 +1,14 @@
 package lesson4;
 
 import javafx.scene.control.TextArea;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ServerListener implements Runnable{
+    Logger log = Logger.getLogger(ServerListener.class);
 
     private final ObjectInputStream is;
     private boolean running;
@@ -31,7 +33,8 @@ public class ServerListener implements Runnable{
                 }
                 is.close();
             } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Exception while read");
+                log.error("Exception while read");
+                //System.err.println("Exception while read");
                 break;
             }
         }

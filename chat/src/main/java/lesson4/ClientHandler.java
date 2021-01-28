@@ -1,9 +1,13 @@
 package lesson4;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.net.Socket;
 
+
 public class ClientHandler implements Runnable, Closeable {
+    Logger log = Logger.getLogger(ClientHandler.class);
 
     private EchoServer server;
     private Socket socket;
@@ -41,7 +45,8 @@ public class ClientHandler implements Runnable, Closeable {
                 bw.write(message.getSendAt() + ": " + message.getAuthor() + ": " + message.getMessage()+"\n");
                 bw.close();
             } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Exception while read");
+                log.error("Exception while read");
+                //System.err.println("Exception while read");
                 break;
             }
         }
